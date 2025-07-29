@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 function ExpensesListPage() {
 
   // Get necessary functions, state from ExpenseContext.js
-  const { expenses, editExpense, deleteExpense } = useExpenses();
+  const { expenses, deleteExpense } = useExpenses();
   
   const navigate = useNavigate();
 
@@ -40,7 +40,7 @@ function ExpensesListPage() {
           <div className="expense-list-container">
             {expenses.map((expense) => (
               <div key={expense.id} >
-                <div>
+                <div className="expense-details">
                   <h4>{expense.title}</h4>
                   <p>
                     Date: {expense.date}
@@ -48,11 +48,8 @@ function ExpensesListPage() {
                 </div>
                 <div>
                   <h3>${expense.amount}</h3>
-                  <button onClick={() => navigate(`/edit/${expense.id}`)}>
-                    Edit
-                  </button>
-
-                  <button onClick={() => deleteExpense(expense.id)}>Delete</button>
+                  <button className="edit-btn" onClick={() => navigate(`/edit/${expense.id}`)}>Edit</button>
+                  <button className="delete-btn" onClick={() => deleteExpense(expense.id)}>Delete</button>
                 </div>
               </div>
             ))}
@@ -65,8 +62,8 @@ function ExpensesListPage() {
           </div>
 
 
-            <button onClick={() => navigate('/add')}>Add Expense</button>
-            <button onClick={() => navigate('/')}>See Stats</button>
+            <button className="add-expense-btn" onClick={() => navigate('/add')}>Add Expense</button>
+            <button className="stats-btn" onClick={() => navigate('/')}>See Stats</button>
 
         </div>
 

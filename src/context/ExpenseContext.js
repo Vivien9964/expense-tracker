@@ -9,6 +9,7 @@ export function ExpenseProvider({ children }) {
 
 
   // Update local storage, whenver expenses array changes!
+  // Note: not when amount or title changes separately 
   useEffect(() => {
     if(expenses.length > 0) {
       localStorage.setItem('expenses', JSON.stringify(expenses));
@@ -16,7 +17,7 @@ export function ExpenseProvider({ children }) {
   }, [expenses])
 
 
-  // Load saved expenses when the app starts
+  // Load saved expenses from local storage when the app starts
   useEffect(() => {
 
     try {
@@ -26,8 +27,9 @@ export function ExpenseProvider({ children }) {
 
       // Check if data exists
       if(savedExpenses) {
-        // Saved data exists
+        // Saved data exists -> convert the JSON to the actual expenses array
         const parsedExpenses = JSON.parse(savedExpenses);
+
         // Update expenses array
         setExpenses(parsedExpenses);
         console.log("Loaded expenses", parsedExpenses);
@@ -67,7 +69,7 @@ export function ExpenseProvider({ children }) {
     console.log("Deleted expense with ID:", id);
   }
 
-  // Function to edit a given expense - with simple pop-up box for now
+  // Function to edit a given expense -> no longer pop-up box, but actual edit page
   const editExpense = (id, updatedData) => {
     setExpenses(expenses.map(expense => {
 

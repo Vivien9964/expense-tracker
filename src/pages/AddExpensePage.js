@@ -5,11 +5,11 @@ import { useExpenses } from '../context/ExpenseContext';
 
 function AddExpensePage() {
 
-  // Expense context
+  // Expense context -> Get addExpense function from context
   const { addExpense } = useExpenses();
   const navigate = useNavigate();
   
-  // States to manage user input validation, success and error messages
+  // States to manage user input: validation, success and error messages
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
   const [success, setSuccess] = useState(false);
@@ -21,7 +21,7 @@ function AddExpensePage() {
   // -> form validation : title (it is not empty, longer), amount (not null, not negative)
   // -> error handling : if validation fails in any field, they are saved in errors object
   // -> reset states, start countdown and navigate to ExpenseListPage.js
-
+  // Reused in EditExpensePage 
   const handleSubmit = (e) => {
     e.preventDefault(); 
 
@@ -75,6 +75,7 @@ function AddExpensePage() {
   // When users start typing, the error message disappears
   // -> sets new title 
   // -> hides error message
+  // Used in EditExpensePage as well
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
     if(errors.title) {
@@ -90,6 +91,7 @@ function AddExpensePage() {
   // When users start typing the error message disappears
   // -> sets new amount value
   // -> hides error message
+  // Used in EditExpensePage as well
   const handleAmountChange = (e) => {
     setAmount(e.target.value);
     if(errors.amount) {
@@ -102,11 +104,11 @@ function AddExpensePage() {
 
 
   return (
-    <div className="container">
+    <div className="add-expense-container">
 
       {success ? (
 
-        <div>
+        <div className="add-success-container">
           <h2>Expense added successfully!</h2>
           <p>Redirecting to your expenses list in {countdown}...</p>
           <button onClick={() => navigate('/expenses')}>View Expenses Now</button>
@@ -114,13 +116,13 @@ function AddExpensePage() {
       ) 
       : (
 
-      <div>
+      <div className="add-error-container">
 
         <h1>Add New Expense</h1>
     
         <form onSubmit={handleSubmit}>
         
-          <div>
+          <div className="title-container">
             <label>Expense Title:</label>
             <input
               type="text"
@@ -130,11 +132,11 @@ function AddExpensePage() {
             />
 
             {errors.title && (
-              <div><p>{errors.title}</p></div>
+              <div className="error-statement"><p>{errors.title}</p></div>
             )}
           </div>
         
-          <div>
+          <div className="amount-container">
             <label>Amount ($):</label>
             <input
               type="number"
@@ -145,11 +147,11 @@ function AddExpensePage() {
               min="0"
             />
              {errors.amount && (
-              <div><p>{errors.amount}</p></div>
+              <div className="error-statement"><p>{errors.amount}</p></div>
             )}
           </div>
 
-          <button type="submit">Add Expense</button>
+          <button className="add-expense-btn" type="submit">Add Expense</button>
 
         </form>
       </div>
