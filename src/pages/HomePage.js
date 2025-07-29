@@ -13,7 +13,7 @@ function HomePage() {
       <p>This is a simple app to track your expenses.</p>
       
      
-      <div style={{ marginTop: '20px', padding: '15px', backgroundColor: 'white', borderRadius: '5px' }}>
+      <div>
         <h3>Quick Stats:</h3>
         <p>Total Expenses: {expenses.length}</p>
         

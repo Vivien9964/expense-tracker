@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const ExpenseContext = createContext();
 
@@ -6,6 +6,40 @@ export function ExpenseProvider({ children }) {
 
   //Store expenses in an array
   const [expenses, setExpenses] = useState([]); 
+
+
+  // Update local storage, whenver expenses array changes!
+  useEffect(() => {
+    if(expenses.length > 0) {
+      localStorage.setItem('expenses', JSON.stringify(expenses));
+    }
+  }, [expenses])
+
+
+  // Load saved expenses when the app starts
+  useEffect(() => {
+
+    try {
+
+      // Get saved data
+      const savedExpenses = localStorage.getItem('expenses');
+
+      // Check if data exists
+      if(savedExpenses) {
+        // Saved data exists
+        const parsedExpenses = JSON.parse(savedExpenses);
+        // Update expenses array
+        setExpenses(parsedExpenses);
+        console.log("Loaded expenses", parsedExpenses);
+      } else {
+        // No saved data yet
+        console.log("No saved expenses found!");
+      }
+    } catch(error) {
+      // Error in loading data
+      console.error("Error loading expenses", error);
+    }
+  }, []);
 
   // Function to add a new expense to the array with:
   // -> unique ID

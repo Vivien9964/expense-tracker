@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import AddExpensePage from './pages/AddExpensePage';
 import ExpensesListPage from './pages/ExpensesListPage';
+import EditExpensePage from './pages/EditExpensePage';
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
             <Route path="/add" element={<AddExpensePage />} />
           
             <Route path="/expenses" element={<ExpensesListPage />} />
+
+            <Route path="/edit/:id" element={EditExpensePage}/>
 
           </Routes>
         

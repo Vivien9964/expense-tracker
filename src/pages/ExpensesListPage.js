@@ -48,19 +48,7 @@ function ExpensesListPage() {
                 </div>
                 <div>
                   <h3>${expense.amount}</h3>
-                  <button
-                    onClick={() => {
-                      const newTitle = prompt("Enter new title:", expense.title);
-                      const newAmount = prompt("Enter new amount:", expense.amount);
-
-                      if(newTitle && newAmount) {
-                        editExpense(expense.id, {
-                          title: newTitle,
-                          amount: parseFloat(newAmount)
-                        });
-                      }
-                    }}
-                  >
+                  <button onClick={() => navigate(`/edit/${expense.id}`)}>
                     Edit
                   </button>
 
