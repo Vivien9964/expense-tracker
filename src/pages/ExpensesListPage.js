@@ -11,9 +11,24 @@ function ExpensesListPage() {
   const navigate = useNavigate();
 
   // Calculate total costs from expenses data
-  const totalCosts = expenses.reduce((total, expense) => {
+  const totalCosts = filteredExpenses.reduce((total, expense) => {
     return total + parseFloat(expense.amount);
   }, 0);
+
+
+
+  const [searchTitle, setSearchTitle] = useState('');
+  const [searchDate, setSearchDate] = useState('all');
+  const [searchAmount, setSearchAmount] = useState(0);
+
+  const filteredExpenses = expenses.filter(expense => expense.title.toLowerCase().includes(searchTitle.toLowerCase()));
+  const filterByDate = (expense) => {
+    if(searchDate === 'all') return true;
+
+    const expenseDate = new Date(expense.date);
+    const today = new Date();
+
+  }
   
   
   return (
@@ -35,10 +50,31 @@ function ExpensesListPage() {
         // With registered expenses
         <div className="expense-container">
 
+          <div className="filter-container">
+          <input 
+            type="text" 
+            placeholder="Search expenses..."
+            value={searchTitle}
+            onChange={(e) => searchTitle(e.target.value)}
+          />
+
+          <select 
+            value={searchDate}
+            onChange={(e) => setSearchDate(e.target.value)}
+          >
+            <option value="all">All</option>
+            <option value="week">Last 7 days</option>
+            <option value="month">Last 30 days</option>
+          </select>
+
+
+          </div>
+         
+
           <p>Total expenses: {expenses.length}</p>
 
           <div className="expense-list-container">
-            {expenses.map((expense) => (
+            {filteredExpenses.map((expense) => (
               <div key={expense.id} >
                 <div className="expense-details">
                   <h4>{expense.title}</h4>
@@ -61,9 +97,8 @@ function ExpensesListPage() {
             <p><strong>Total Amount: {totalCosts.toFixed(2)}$</strong></p>
           </div>
 
-
-            <button className="add-expense-btn" onClick={() => navigate('/add')}>Add Expense</button>
-            <button className="stats-btn" onClick={() => navigate('/')}>See Stats</button>
+          <button className="add-expense-btn" onClick={() => navigate('/add')}>Add Expense</button>
+          <button className="stats-btn" onClick={() => navigate('/')}>See Stats</button>
 
         </div>
 
