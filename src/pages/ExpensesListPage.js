@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useExpenses } from '../context/ExpenseContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,25 +10,63 @@ function ExpensesListPage() {
   
   const navigate = useNavigate();
 
-  // Calculate total costs from expenses data
-  const totalCosts = filteredExpenses.reduce((total, expense) => {
-    return total + parseFloat(expense.amount);
-  }, 0);
 
-
-
+  // Search states
   const [searchTitle, setSearchTitle] = useState('');
   const [searchDate, setSearchDate] = useState('all');
-  const [searchAmount, setSearchAmount] = useState(0);
+  const [searchAmount, setSearchAmount] = useState('all');
 
-  const filteredExpenses = expenses.filter(expense => expense.title.toLowerCase().includes(searchTitle.toLowerCase()));
+  
+  // Search by date -> all, prev. week, prev. month
   const filterByDate = (expense) => {
     if(searchDate === 'all') return true;
 
     const expenseDate = new Date(expense.date);
     const today = new Date();
 
-  }
+    if(searchDate === 'week') {
+      const lastWeek = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+      return expenseDate >= lastWeek;
+    }
+
+    if(searchDate === 'month') {
+      const lastMonth = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
+      return expenseDate >= lastMonth;
+    }
+
+    return true;
+
+  };
+
+  // Search by amount range
+  const filterByAmount = (expense) => {
+    if(searchAmount === 'all') return true;
+
+    const amount = parseFloat(expense.amount);
+
+    if(searchAmount === 'under50') return amount < 50;
+    if(searchAmount === '50to100') return amount >= 50 && amount <= 100;
+    if(searchAmount === 'over100') return amount > 100;
+
+    return true;
+  };
+
+
+  // Searches combined 
+  const filteredExpenses = expenses.filter(expense => {
+    const matchTitle = expense.title.toLowerCase().includes(searchTitle.toLowerCase());
+    const matchDate = filterByDate(expense);
+    const matchAmount = filterByAmount(expense);
+
+    return matchTitle && matchDate && matchAmount;
+
+  });
+
+   // Calculate total costs from expenses data
+   const totalCosts = filteredExpenses.reduce((total, expense) => {
+    return total + parseFloat(expense.amount);
+  }, 0);
+
   
   
   return (
@@ -55,7 +93,7 @@ function ExpensesListPage() {
             type="text" 
             placeholder="Search expenses..."
             value={searchTitle}
-            onChange={(e) => searchTitle(e.target.value)}
+            onChange={(e) => setSearchTitle(e.target.value)}
           />
 
           <select 
@@ -68,10 +106,21 @@ function ExpensesListPage() {
           </select>
 
 
+          <select
+            value={searchAmount}
+            onChange={(e) => setSearchAmount(e.target.value)}
+          >
+            <option value="all">All</option>
+            <option value="under50">Under 50</option>
+            <option value="50to100">50 - 100</option>
+            <option value="over100">Over 100</option>
+          </select>
+
+
           </div>
          
 
-          <p>Total expenses: {expenses.length}</p>
+          <p>Total expenses: {filteredExpenses.length}</p>
 
           <div className="expense-list-container">
             {filteredExpenses.map((expense) => (
@@ -93,7 +142,7 @@ function ExpensesListPage() {
           
           <div className="summary-container">
             <h4>Summary:</h4>
-            <p>Total Expenses: {expenses.length}</p>
+            <p>Total Expenses: {filteredExpenses.length}</p>
             <p><strong>Total Amount: {totalCosts.toFixed(2)}$</strong></p>
           </div>
 
