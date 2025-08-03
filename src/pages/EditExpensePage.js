@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useExpenses } from '../context/ExpenseContext';
+import styles from './EditExpensePage.module.css';
 
 function EditExpensePage() {
 
@@ -13,9 +14,27 @@ function EditExpensePage() {
     // Same states as in AddExpensePage
     const [title, setTitle] = useState('');
     const [amount, setAmount] = useState('');
+    const [category, setCategory] = useState('Food & Dining');
     const [success, setSuccess] = useState(false);
     const [errors, setErrors] = useState({});
     const [countDown, setCountDown] = useState(0);
+
+    // Predefined category options
+    const categoryOptions = [
+        'Food & Dining',
+        'Transportation',
+        'Shopping',
+        'Entertainment',
+        'Bills & Utilities',
+        'Healthcare',
+        'Education',
+        'Travel',
+        'Groceries',
+        'Personal Care',
+        'Home & Garden',
+        'Gifts & Donations',
+        'Other'
+    ];
 
 
     // Get expense and show a pre-populated form with the current input 
@@ -26,6 +45,7 @@ function EditExpensePage() {
             // Expense exists -> show automatically data for user
             setTitle(expenseToEdit.title);
             setAmount(expenseToEdit.amount);
+            setCategory(expenseToEdit.category || 'Food & Dining'); // Default if no category
         } else {
             // No matching expense -> redirect back 
             // -> expense was deleted or user entered the wrong URL
@@ -63,7 +83,8 @@ function EditExpensePage() {
         // New, edited data
         const updatedData = {
             title: title.trim(),
-            amount: parseFloat(amount).toFixed(2)
+            amount: parseFloat(amount).toFixed(2),
+            category: category
         };
 
 
@@ -110,44 +131,51 @@ function EditExpensePage() {
         }
       }
 
+      const handleCategoryChange = (e) => {
+        setCategory(e.target.value);
+      }
+
 
 
     return (
 
-        <div className="main-edit-container">
+        <div className="container">
+            <div className="form-container">
 
             {success ? (
                 // Update was successful
-                <div className="update-success-container">
-                    <h2>Expense updated successfully!</h2>
-                    <p>Redirecting to your expenses list in {countDown}...</p>
-                    <button onClick={() => navigate('/expenses')}>Go to your expenses</button>
+                <div className={`card ${styles.successContainer}`}>
+                    <div className={styles.successIcon}>✅</div>
+                    <h2 className={styles.successTitle}>Expense updated successfully!</h2>
+                    <p className={styles.successMessage}>Redirecting to your expenses list in <span className={styles.countdown}>{countDown}</span>...</p>
                 </div>
             ) : (
                 // Update wasn't successful
-                <div className="update-error-container">
-                    <h1>Add New Expense</h1>
+                <div className={styles.errorContainer}>
+                    <h1 className={styles.pageTitle}>Edit Expense</h1>
     
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit} className={`card ${styles.formCard}`}>
                     
-                    <div className="edit-title-container">
-                        <label>Expense Title:</label>
+                    <div className={styles.formGroup}>
+                        <label className={styles.formLabel}>Expense Title:</label>
                         <input
                         type="text"
+                        className={styles.formInput}
                         value={title}
                         onChange={handleTitleChange}
                         placeholder="e.g., Lunch, Gas, Coffee..."
                         />
 
                         {errors.title && (
-                        <div className="error-statement"><p>{errors.title}</p></div>
+                        <div className={styles.errorMessage}>{errors.title}</div>
                         )}
                     </div>
                     
-                    <div className="edit-amount-container">
-                        <label>Amount ($):</label>
+                    <div className={styles.formGroup}>
+                        <label className={styles.formLabel}>Amount ($):</label>
                         <input
                         type="number"
+                        className={styles.formInput}
                         value={amount}
                         onChange={handleAmountChange}
                         placeholder="e.g., 25.50"
@@ -155,11 +183,29 @@ function EditExpensePage() {
                         min="0"
                         />
                         {errors.amount && (
-                        <div className="error-statement"><p>{errors.amount}</p></div>
+                        <div className={styles.errorMessage}>{errors.amount}</div>
                         )}
                     </div>
 
-                    <button className="edit-expense-btn" type="submit">Edit Expense</button>
+                    <div className={styles.formGroup}>
+                        <label className={styles.formLabel}>Category:</label>
+                        <select
+                            value={category}
+                            onChange={handleCategoryChange}
+                            className={styles.formSelect}
+                        >
+                            {categoryOptions.map((option) => (
+                                <option key={option} value={option}>
+                                    {option}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className={styles.buttonGroup}>
+                        <button type="button" onClick={() => navigate('/expenses')} className="btn-outline">Cancel</button>
+                        <button type="submit" className="btn-primary">Update Expense</button>
+                    </div>
 
                     </form>
 
@@ -167,7 +213,7 @@ function EditExpensePage() {
 
             )}
 
-
+            </div>
 
 
 

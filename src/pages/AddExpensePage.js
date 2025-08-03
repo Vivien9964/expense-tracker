@@ -1,6 +1,7 @@
 import React, { useState  } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useExpenses } from '../context/ExpenseContext';
+import styles from './AddExpensePage.module.css';
 
 
 function AddExpensePage() {
@@ -12,9 +13,27 @@ function AddExpensePage() {
   // States to manage user input: validation, success and error messages
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
+  const [category, setCategory] = useState('Food & Dining');
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState({});
   const [countdown, setCountDown] = useState(0);
+
+  // Expense category options
+  const categoryOptions = [
+    'Food & Dining',
+    'Transportation',
+    'Shopping',
+    'Entertainment',
+    'Bills & Utilities',
+    'Healthcare',
+    'Education',
+    'Travel',
+    'Groceries',
+    'Personal Care',
+    'Home & Garden',
+    'Gifts & Donations',
+    'Other'
+  ];
 
   
   // Function to manage form submission:
@@ -48,12 +67,14 @@ function AddExpensePage() {
 
     const expense = {
       title: title.trim(),
-      amount: parseFloat(amount).toFixed(2)
+      amount: parseFloat(amount).toFixed(2),
+      category: category
     }
    
     addExpense(expense);
     setTitle('');
     setAmount('');
+    setCategory('Food & Dining');
     setSuccess(true);
     setCountDown(3)
 
@@ -102,44 +123,52 @@ function AddExpensePage() {
     }
   }
 
+  const handleCategoryChange = (e) => {
+    setCategory(e.target.value);
+  }
+
 
   return (
-    <div className="add-expense-container">
+    <div className="container">
+      <div className="form-container">
 
       {success ? (
 
-        <div className="add-success-container">
-          <h2>Expense added successfully!</h2>
-          <p>Redirecting to your expenses list in {countdown}...</p>
-          <button onClick={() => navigate('/expenses')}>View Expenses Now</button>
+        <div className={`card ${styles.successContainer}`}>
+          <div className={styles.successIcon}>✅</div>
+          <h2 className={styles.successTitle}>Expense added successfully!</h2>
+          <p className={styles.successMessage}>Redirecting to your expenses list in <span className={styles.countdown}>{countdown}</span>...</p>
+          <button onClick={() => navigate('/expenses')} className={`btn-primary ${styles.viewNowButton}`}>View Expenses Now</button>
         </div>
       ) 
       : (
 
-      <div className="add-error-container">
+      <div className={styles.errorContainer}>
 
-        <h1>Add New Expense</h1>
+        <h1 className={styles.pageTitle}>Add New Expense</h1>
     
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={`card ${styles.formCard}`}>
         
-          <div className="title-container">
-            <label>Expense Title:</label>
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel}>Expense Title:</label>
             <input
               type="text"
+              className={styles.formInput}
               value={title}
               onChange={handleTitleChange}
               placeholder="e.g., Lunch, Gas, Coffee..."
             />
 
             {errors.title && (
-              <div className="error-statement"><p>{errors.title}</p></div>
+              <div className={styles.errorMessage}>{errors.title}</div>
             )}
           </div>
         
-          <div className="amount-container">
-            <label>Amount ($):</label>
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel}>Amount ($):</label>
             <input
               type="number"
+              className={styles.formInput}
               value={amount}
               onChange={handleAmountChange}
               placeholder="e.g., 25.50"
@@ -147,17 +176,36 @@ function AddExpensePage() {
               min="0"
             />
              {errors.amount && (
-              <div className="error-statement"><p>{errors.amount}</p></div>
+              <div className={styles.errorMessage}>{errors.amount}</div>
             )}
           </div>
 
-          <button className="add-expense-btn" type="submit">Add Expense</button>
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel}>Category:</label>
+            <select
+              value={category}
+              onChange={handleCategoryChange}
+              className={styles.formSelect}
+            >
+              {categoryOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className={styles.buttonGroup}>
+            <button type="button" onClick={() => {setTitle(''); setAmount(''); setCategory('Food & Dining');}} className="btn-outline">Reset</button>
+            <button type="submit" className="btn-primary">Add Expense</button>
+          </div>
 
         </form>
       </div>
     )}
-
-  </div>
+      
+      </div>
+    </div>
   );
 }
 
