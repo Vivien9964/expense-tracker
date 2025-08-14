@@ -8,7 +8,7 @@
 
 git clone https://github.com/Vivien9964/expense-tracker.git
 
-2. Navigate to project directory:
+2. Navigate to directory project directory:
 
 cd expense-tracker
 
@@ -16,11 +16,11 @@ cd expense-tracker
 
 npm install
 
-4. Start the development server:
+3. Start the development server:
 
 npm run dev
 
-5. Open the local URL shown in the terminal.
+4. Open the local URL shown in the terminal.
 
 ---
 
