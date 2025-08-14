@@ -48,7 +48,7 @@ function HomePage() {
     const categoryTotals = {};
 
     currentMonthExpenses.forEach(expense => {
-      const category = expense.category || 'Uncategorized';
+      const category = expense.category || 'Different';
       if (!categoryTotals[category]) {
         categoryTotals[category] = 0;
       }
@@ -64,7 +64,7 @@ function HomePage() {
       return total + parseFloat(expense.amount);
   }, 0);
 
-  // Get recent expenses (last 3)
+  // Get recent expenses
   const getRecentExpenses = () => {
     return expenses
       .sort((a, b) => new Date(b.date) - new Date(a.date))
@@ -94,7 +94,7 @@ function HomePage() {
       ? Object.keys(categoryCount).reduce((a, b) => 
           categoryCount[a] > categoryCount[b] ? a : b
         )
-      : 'No data';
+      : 'No data available';
 
     // Last month comparison (if we have data)
     const lastMonth = new Date();
@@ -172,7 +172,7 @@ function HomePage() {
       },
       title: {
         display: true,
-        text: '🍂 Spending by Category This Month',
+        text: 'Spending by Category',
         font: {
           family: 'Crimson Text',
           size: 16,
@@ -227,7 +227,7 @@ function HomePage() {
           </p>
         ) : (
           <p className={`${styles.motivationalMessage} ${styles.hasExpenses}`}>
-            Great! You're tracking your expenses. 💰
+            Great! You're tracking your expenses.
           </p>
         )}
       </div>
@@ -236,7 +236,7 @@ function HomePage() {
       {recentExpenses.length > 0 && (
         <div className={`card ${styles.recentExpensesSection}`}>
           <h3 className={styles.sectionTitle}>
-            🕐 Recent Expenses
+            Recent Expenses
           </h3>
           <div className={styles.recentExpensesList}>
             {recentExpenses.map((expense, index) => (
@@ -264,57 +264,6 @@ function HomePage() {
         </div>
       )}
 
-      {/* Smart Insights */}
-      {insights && (
-        <div className={`card ${styles.insightsCard}`}>
-          <h3 className={styles.sectionTitle}>
-            🧠 Smart Insights
-          </h3>
-          <div className={styles.insightsGrid}>
-            <div className={styles.insightItem}>
-              <div className={styles.insightValue}>
-                ${insights.avgDaily.toFixed(2)}
-              </div>
-              <div className={styles.insightLabel}>
-                Average Daily Spending
-              </div>
-            </div>
-            
-            <div className={styles.insightItem}>
-              <div className={styles.insightValue}>
-                ${parseFloat(insights.highestExpense.amount).toFixed(2)}
-              </div>
-              <div className={styles.insightLabel}>
-                Highest Single Expense
-              </div>
-              <div className={styles.insightSubtext}>
-                ({insights.highestExpense.title})
-              </div>
-            </div>
-
-            <div className={styles.insightItem}>
-              <div className={styles.insightValue}>
-                {insights.mostFrequentCategory}
-              </div>
-              <div className={styles.insightLabel}>
-                Top Category
-              </div>
-            </div>
-
-            {insights.comparison !== null && (
-              <div className={styles.insightItem}>
-                <div className={`${styles.insightValue} ${insights.comparison > 0 ? styles.comparisonPositive : styles.comparisonNegative}`}>
-                  {insights.comparison > 0 ? '+' : ''}{insights.comparison.toFixed(1)}%
-                </div>
-                <div className={styles.insightLabel}>
-                  vs Last Month
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
       {/* Chart */}
       {currentMonthExpenses.length > 0 ? (
         <div className="card">
@@ -322,34 +271,19 @@ function HomePage() {
         </div>
       ) : (
         <div className={`card ${styles.emptyChart}`}>
-          <p>📊 No expenses this month to show in chart.</p>
+          <p>No expenses this month to show in chart.</p>
           <p>Add some expenses to see your spending visualization!</p>
         </div>
       )}
 
-      {/* Quick Tips */}
-      <div className={`card ${styles.tipsCard}`}>
-        <h3 className={styles.tipsTitle}>
-          💡 Financial Tip
-        </h3>
-        <p className={styles.tipsText}>
-          {expenses.length === 0 
-            ? "Start tracking your expenses today! Even small purchases add up over time. Awareness is the first step to better financial health. 🌱"
-            : currentMonthTotal > 0 
-              ? `Great job tracking your expenses! Try the 50/30/20 rule: 50% needs, 30% wants, 20% savings. You're spending $${insights?.avgDaily.toFixed(2)} daily this month. 💪`
-              : "Consistency is key! Try to log expenses as soon as you make them. This builds a healthy habit and gives you real-time awareness of your spending. 🎯"
-          }
-        </p>
-      </div>
-
       {/* Navigation Buttons */}
       <div className={styles.navigationButtons}>
         <button onClick={() => navigate('/add')} className="btn-primary">
-          ➕ Add New Expense
+          Add New Expense
         </button>
         
         <button onClick={() => navigate('/expenses')} className="btn-secondary">
-          📊 View All Expenses
+          View All Expenses
         </button>
       </div>
       

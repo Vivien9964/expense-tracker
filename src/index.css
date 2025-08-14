@@ -1,45 +1,38 @@
-/* Autumn Vintage Disney Theme - Global Styles */
 
-/* Import a classic, Disney-inspired font */
 @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
 
 :root {
-  /* Autumn Vintage Disney Color Palette */
-  --primary-color: #d4a574; /* Warm caramel */
+  --primary-color: #d4a574;
   --primary-hover: #c89660;
-  --secondary-color: #a8956b; /* Sage autumn */
-  --accent-color: #e8b4a6; /* Dusty rose */
+  --secondary-color: #a8956b;
+  --accent-color: #e8b4a6;
   --accent-hover: #e0a394;
   
-  /* Background colors */
-  --background-main: #f9f6f1; /* Warm cream */
+  --background-main: #f9f6f1; 
   --background-card: #ffffff;
-  --background-muted: #f2ede6; /* Light taupe */
-  --background-hover: #eee5db; /* Warm hover */
+  --background-muted: #f2ede6;
+  --background-hover: #eee5db;
   
-  /* Text colors */
-  --text-primary: #5a4a3a; /* Rich brown */
-  --text-secondary: #7d6b5a; /* Medium brown */
-  --text-muted: #a89384; /* Light brown */
+  --text-primary: #5a4a3a; 
+  --text-secondary: #7d6b5a;
+  --text-muted: #a89384;
   --text-white: #ffffff;
   
-  /* Border and divider colors */
   --border-light: #e6ddd4;
   --border-medium: #d4c5b8;
   --border-dark: #c4b5a8;
   
-  /* Status colors */
-  --success-color: #9bb68a; /* Sage green */
-  --warning-color: #e6c078; /* Golden yellow */
-  --error-color: #d4917a; /* Soft coral */
+  --success-color: #9bb68a; 
+  --warning-color: #e6c078; 
+  --error-color: #d4917a; 
   
-  /* Shadows - warm and soft */
+  
   --shadow-sm: 0 2px 8px rgba(139, 115, 93, 0.08);
   --shadow-md: 0 4px 16px rgba(139, 115, 93, 0.12);
   --shadow-lg: 0 8px 24px rgba(139, 115, 93, 0.16);
   --shadow-xl: 0 12px 32px rgba(139, 115, 93, 0.2);
   
-  /* Spacing system */
+
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
   --spacing-md: 1rem;
@@ -48,15 +41,13 @@
   --spacing-2xl: 3rem;
   --spacing-3xl: 4rem;
   
-  /* Border radius */
   --radius-sm: 0.375rem;
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
   
-  /* Typography */
-  --font-display: 'Crimson Text', serif; /* For headings */
-  --font-body: 'Montserrat', sans-serif; /* For body text */
+  --font-display: 'Crimson Text', serif; 
+  --font-body: 'Montserrat', sans-serif;
   
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
@@ -68,7 +59,6 @@
   --font-size-4xl: 2.25rem;
 }
 
-/* Reset and base styles */
 * {
   margin: 0;
   padding: 0;
@@ -88,7 +78,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Typography */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   font-weight: 600;
@@ -124,7 +113,6 @@ p {
   color: var(--text-secondary);
 }
 
-/* Container styles */
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -132,20 +120,17 @@ p {
   min-height: 100vh;
 }
 
-/* Form container for better responsiveness */
 .form-container {
   max-width: 600px;
   margin: 0 auto;
 }
 
-/* Responsive form widths */
 .form-wrapper {
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
 }
 
-/* Card styles */
 .card {
   background: var(--background-card);
   border-radius: var(--radius-lg);
@@ -161,7 +146,6 @@ p {
   transform: translateY(-2px);
 }
 
-/* Button styles */
 button {
   font-family: var(--font-body);
   font-weight: 500;
@@ -223,7 +207,6 @@ button {
   transform: translateY(-1px);
 }
 
-/* Form styles */
 .form-group {
   margin-bottom: var(--spacing-lg);
 }
@@ -249,7 +232,6 @@ input, select, textarea {
   transition: all 0.3s ease;
 }
 
-/* Input sizing for different types */
 input[type="text"], input[type="email"] {
   min-width: 0;
 }
@@ -277,7 +259,6 @@ input::placeholder, textarea::placeholder {
   color: var(--text-muted);
 }
 
-/* Error styles */
 .error-message {
   color: var(--error-color);
   font-size: var(--font-size-sm);
@@ -293,7 +274,6 @@ input::placeholder, textarea::placeholder {
   font-size: var(--font-size-xs);
 }
 
-/* Success styles */
 .success-message {
   background: linear-gradient(135deg, rgba(155, 182, 138, 0.1) 0%, rgba(155, 182, 138, 0.05) 100%);
   border: 1px solid var(--success-color);
@@ -304,7 +284,6 @@ input::placeholder, textarea::placeholder {
   margin: var(--spacing-xl) 0;
 }
 
-/* Navigation styles */
 .navbar {
   background: linear-gradient(135deg, var(--background-card) 0%, var(--background-muted) 100%);
   border-bottom: 1px solid var(--border-light);
@@ -338,7 +317,6 @@ input::placeholder, textarea::placeholder {
   font-weight: 600;
 }
 
-/* Utility classes */
 .text-center {
   text-align: center;
 }
@@ -369,7 +347,6 @@ input::placeholder, textarea::placeholder {
   gap: var(--spacing-md);
 }
 
-/* Responsive design */
 
 /* Large screens (1200px and up) */
 @media (min-width: 1200px) {
@@ -443,17 +420,14 @@ input::placeholder, textarea::placeholder {
     justify-content: center;
   }
   
-  /* Full width inputs on mobile */
   input, select, textarea {
     max-width: 100%;
   }
   
-  /* Better mobile form spacing */
   .form-group {
     margin-bottom: var(--spacing-md);
   }
   
-  /* Responsive button containers */
   .flex-center {
     flex-direction: column;
     gap: var(--spacing-sm);
@@ -463,7 +437,6 @@ input::placeholder, textarea::placeholder {
     gap: var(--spacing-sm);
   }
   
-  /* Mobile expense list layout */
   .card[style*="display: flex"] {
     flex-direction: column !important;
     align-items: flex-start !important;
@@ -501,7 +474,6 @@ input::placeholder, textarea::placeholder {
   }
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
