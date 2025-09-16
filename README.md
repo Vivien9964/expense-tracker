@@ -6,29 +6,38 @@
 
 1. Clone the repository: 
 
-git clone https://github.com/Vivien9964/expense-tracker.git
+git clone https://github.com/Vivien9964/FinanceTracker.git
+```
 
-2. Navigate to directory project directory:
+2. Navigate to the project directory:
 
-cd expense-tracker
+```bash
+cd FinanceTracker
+```
 
 3. Install dependencies:
 
+```bash
 npm install
+```
 
-3. Start the development server:
+4. Start the development server:
 
-npm run dev
+```bash
+npm start
+```
 
-4. Open the local URL shown in the terminal.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
 ## Technologies: 
 
-- React (Vite)
+- React (Create React App)
 - JavaScript (ES6+)
-- Chart.js
+- React Router DOM
+- React Context API
+- Chart.js & react-chartjs-2
 - CSS Modules
 
 ---
