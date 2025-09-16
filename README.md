@@ -7,27 +7,23 @@
 1. Clone the repository: 
 
 git clone https://github.com/Vivien9964/FinanceTracker.git
-```
+
 
 2. Navigate to the project directory:
 
-```bash
 cd FinanceTracker
-```
 
 3. Install dependencies:
 
-```bash
 npm install
-```
+
 
 4. Start the development server:
 
-```bash
 npm start
-```
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+5. Open 
+(http://localhost:3000) in your browser.
 
 ---
 
